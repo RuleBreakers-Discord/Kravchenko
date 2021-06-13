@@ -9,9 +9,8 @@ LANG = 'ru' #ru - for russian, en - for english, use that for global language se
 lang_list = ['ru', 'ру', 'en', 'eng'] #список для проверки языка / list for language checks
 PREFIX = '*' # задаем префикс / set prefix
 
-#TOKEN = os.getenv("DISCORD_TOKEN") #строка для запуска на Heroku / string for Heroku launch
+TOKEN = os.getenv("DISCORD_TOKEN") #строка для запуска на Heroku / string for Heroku launch
 #TOKEN = "DISCORD_TOKEN" #строка для запуска где-то, кроме Heroku / string for launch not on the Heroku
-TOKEN = "ODI2MTc4ODcyNTc0NzM4NDUy.YGItCA.NB2Js5Ar5vtVcmvRfJ0Ohtz0AwY" 
 
 intents = discord.Intents.default()
 intents.members = True
