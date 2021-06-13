@@ -1,0 +1,4 @@
+discord.py==v1.6.0
+requests==2.24.0
+beautifulsoup4==4.9.3
+lxml==4.6.3
