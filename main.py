@@ -15,9 +15,9 @@ TOKEN = os.getenv("DISCORD_TOKEN") #строка для запуска на Hero
 intents = discord.Intents.default()
 intents.members = True
 
-bot = commands.Bot(command_prefix=PREFIX, intents=intents) #задаем префикс бота и разрешения для работы / setting prefix and intents
+bot = commands.Bot(command_prefix=PREFIX, intents=intents) #задаем префикс бота и разрешения для работы / setting PREFIX and intents
 version = 'v0.1'
-#bot.remove_command("help") #удаляем дефолтный help от библиотеки discord.py
+bot.remove_command("help") #удаляем дефолтный help от библиотеки discord.py / remove default help from discord.py
 
 @bot.event #запуск бота / bot launching
 async def on_ready():
@@ -32,7 +32,7 @@ async def on_ready():
     await bot.change_presence(activity=discord.Game(name=PREFIX + "help"))
 
 @bot.command(pass_context=True, aliases=["Info", "инфо", "Инфо"])
-async def info(ctx, *, weapon: str = None):
+async def info(ctx, weapon: str = None):
 
     if weapon is None:
         if LANG == 'ru':
@@ -135,5 +135,26 @@ async def meta(ctx):
         embed.add_field(name=f"Tier {result[8]}:", value=result[9], inline=False)
         await ctx.send(embed=embed)
         print('Give meta for user', ctx.author.name)
+
+@bot.command(aliases=["Help", "помощь", "Помощь"])
+async def help(ctx):
+    if LANG == 'ru':
+        embed = discord.Embed(title = 'Помощь', color = 0x00ff00)
+        embed.add_field(name=f"{PREFIX}инфо", value=f'Алиасы:\n{PREFIX}инфо название-оружия, {PREFIX}Info название-оружия, {PREFIX}Инфо название-оружия\nПолучить информацию о оружии.\nНазвание оружия нужно вводить без пробелов (с тире можно) и без кавычек.\nПример: {PREFIX}инфо асвал', inline=False)
+        embed.add_field(name=f"{PREFIX}сравни", value=f'Алиасы:\n{PREFIX}Compare название-первого-оружия название-второго-оружия, {PREFIX}Сравни название-первого-оружия название-второго-оружия\nПолучить информацию о двух оружиях.\nНазвание оружия нужно вводить без пробелов (с тире можно) и без кавычек.\nПример: {PREFIX}сравни асвал топор', inline=False)
+        embed.add_field(name=f"{PREFIX}мета", value=f'Алиасы:\n{PREFIX}Meta, {PREFIX}Мета, {PREFIX}meta\nПолучить мета-отчет.', inline=False)
+        embed.add_field(name='Исходный код:', value='https://github.com/Sux0Phone/Kravchenko', inline=False)
+        embed.set_footer(text=f"Автор бота SuxOPhone\nВерсия бота: {version}")
+        await ctx.send(embed=embed)
+        print('Обработал help для пользователя', ctx.author.name)
+    elif LANG == 'en':
+        embed = discord.Embed(title = 'Help:', color = 0x00ff00)
+        embed.add_field(name=f"{PREFIX}info", value=f'Aliases:\n{PREFIX}инфо weapon-name, {PREFIX}Info weapon-name, {PREFIX}Инфо weapon-name\nGet information about weapon.\nPlease, input weapon name without spaces (you can use dashes) and without quotes.\nExample: {PREFIX}info asval', inline=False)
+        embed.add_field(name=f"{PREFIX}compare", value=f'Aliases:\n{PREFIX}Compare first-weapon-name second-weapon-name, {PREFIX}сравни first-weapon-name second-weapon-name, {PREFIX}Сравни first-weapon-name second-weapon-name\nGet information about weapons.\nPlease, input weapon name without spaces (you can use dashes) and without quotes.\nExample: {PREFIX}compare asval axe', inline=False)
+        embed.add_field(name=f"{PREFIX}meta", value=f'Aliases:\n{PREFIX}Meta, {PREFIX}мета, {PREFIX}Мета\nGet meta-report.', inline=False)
+        embed.add_field(name='Source code:', value='https://github.com/Sux0Phone/Kravchenko', inline=False)
+        embed.set_footer(text=f"Bot author: SuxOPhone\nBot version:{version}")
+        await ctx.send(embed=embed)
+        print('Give help for user', ctx.author.name)
 
 bot.run(TOKEN)
