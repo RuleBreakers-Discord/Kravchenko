@@ -46,4 +46,4 @@ Bot parse weapon info from [CODM.GG](https://codm.gg) and parse meta report from
 
 #### Донат:
 - Моя карта VISA: 4890 4947 1751 2552 (Имя держателя карты: QIWI CARD)
-- [Прямая ссылкаа для перевода](https://qiwi.com/n/SHATC601).
+- [Прямая ссылка для перевода](https://qiwi.com/n/SHATC601).
