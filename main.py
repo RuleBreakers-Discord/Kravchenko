@@ -6,11 +6,11 @@ from discord.ext import commands
 import tools.codm_parsers
 
 LANG = 'en' #ru - for russian, en - for english, use that for global language settings
-lang_list = ['ru', 'ру', 'en', 'eng'] #список для проверки языка / list for language checks
+lang_list = ['ru', 'ру', 'en', 'eng', 'fr', 'fren'] #список для проверки языка / list for language checks
 PREFIX = '*' # задаем префикс / set prefix
 
 TOKEN = os.getenv("DISCORD_TOKEN") #строка для запуска на Heroku / string for Heroku launch
-#TOKEN = "DISCORD_TOKEN" #строка для запуска где-то, кроме Heroku / string for launch not on the Heroku
+#TOKEN = "OTU2NTcyODM3OTQwOTgxNzkw.YjyL4A.nxiySd-Vg4spSB7thz1fF2hq-Jw" #строка для запуска где-то, кроме Heroku / string for launch not on the Heroku
 
 intents = discord.Intents.default()
 intents.members = True
@@ -25,6 +25,8 @@ async def on_ready():
         print('Вошёл как')
     elif LANG == 'en':
         print('Login as')
+    elif LANG == 'fr':
+        print('Se connecter en tant que')
     print(bot.user.name)
     print(bot.user.id)
     print(version)
@@ -41,6 +43,9 @@ async def info(ctx, weapon: str = None):
         elif LANG == 'en':
             await ctx.send(embed = discord.Embed(description = "Enter the weapon name!", color = 0x00ff00))
             return
+            elif LANG == 'fr':
+            await ctx.send(embed = discord.Embed(description = "Entrez le nom de l'arme !", color = 0x00ff00))
+            return
   
     result = await tools.codm_parsers.weapon_parser(weapon.lower(), LANG)
 
@@ -50,6 +55,9 @@ async def info(ctx, weapon: str = None):
             return
         elif LANG == 'en':
             await ctx.send(embed = discord.Embed(description = "I can't found weapon! Remove spaces and quotes in weapon name.", color = 0x00ff00))
+            return
+        elif LANG == 'fr':
+            await ctx.send(embed = discord.Embed(description = "je ne trouve pas d'arme ! Supprimez les espaces et les guillemets dans le nom de l'arme.", color = 0x00ff00))
             return
 
     if LANG == 'ru':
@@ -70,6 +78,15 @@ async def info(ctx, weapon: str = None):
         embed.set_footer(text=f'Changes: {result[3]}')
         await ctx.send(embed=embed)
         print('Give info for', weapon, 'for user', ctx.author.name)
+    elif LANG == 'fr':
+        embed = discord.Embed(title = "Des informations sur " + result[0], color = 0x00ff00)
+        embed.set_image(url=result[10])
+        embed.add_field(name="Type:", value=result[1], inline=False)
+        embed.add_field(name="Description:", value=result[2], inline=False)
+        embed.add_field(name="Stats:", value=f'Dégats: {str(result[4])}\nPrécision: {str(result[5])}\nPortée: {str(result[6])}\nCadence de tir: {str(result[7])}\nMobilité: {str(result[8])}\nContrôle: {str(result[9])}', inline=False)
+        embed.set_footer(text=f'Changements: {result[3]}')
+        await ctx.send(embed=embed)
+        print('Donner des infos pour', weapon, 'pour l'utilisateur', ctx.author.name)
 
 @bot.command(pass_context=True, aliases=["Compare", "сравни", "Сравни"])
 async def compare(ctx, weapon1: str = None, weapon2: str = None):
@@ -81,6 +98,10 @@ async def compare(ctx, weapon1: str = None, weapon2: str = None):
         elif LANG == 'en':
             await ctx.send(embed = discord.Embed(description = "Enter the weapon name!", color = 0x00ff00))
             return
+            
+         elif LANG == 'fr':
+            await ctx.send(embed = discord.Embed(description = "Entrez le nom de l'arme !", color = 0x00ff00))
+            return
   
     result1 = await tools.codm_parsers.weapon_parser(weapon1.lower(), LANG)
     result2 = await tools.codm_parsers.weapon_parser(weapon2.lower(), LANG)
@@ -91,6 +112,9 @@ async def compare(ctx, weapon1: str = None, weapon2: str = None):
             return
         elif LANG == 'en':
             await ctx.send(embed = discord.Embed(description = "I can't found weapon! Remove spaces and quotes in weapon name.", color = 0x00ff00))
+            return
+        elif LANG == 'fr:
+            await ctx.send(embed = discord.Embed(description = "Je ne trouve pas d'arme ! Supprimez les espaces et les guillemets dans le nom de l'arme.", color = 0x00ff00))
             return
 
     if LANG == 'ru':
