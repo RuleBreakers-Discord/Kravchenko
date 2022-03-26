@@ -5,7 +5,7 @@ import discord
 from discord.ext import commands
 import tools.codm_parsers
 
-LANG = 'ru' #ru - for russian, en - for english, use that for global language settings
+LANG = 'en' #ru - for russian, en - for english, use that for global language settings
 lang_list = ['ru', 'ру', 'en', 'eng'] #список для проверки языка / list for language checks
 PREFIX = '*' # задаем префикс / set prefix
 
